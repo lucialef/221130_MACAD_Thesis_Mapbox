@@ -36,6 +36,8 @@ def getRoutes(JSON_month, JSON_start, JSON_end):
     filepath_bloom = './load/bloom.csv'
     bloom_df = pd.read_csv(filepath_bloom)
 
+    ## 4/ DEFINE NETWORK CRS
+    crs_proj = 3857
 
 
     ##### ---------- CREATE MONTH FILTER ---------- #####
@@ -67,11 +69,11 @@ def getRoutes(JSON_month, JSON_start, JSON_end):
 
     ## DEFINE PATH LOCATIONS
     # source / origin
-    start_address = get_location_data(JSON_start['lat'], JSON_start['long'])
-    orig_address = gpd.tools.geocode(start_address, geopy.Nominatim).to_crs(pednet_proj.crs)
+    start_address = get_location_data(JSON_start[1], JSON_start[0])
+    orig_address = gpd.tools.geocode(start_address, geopy.Nominatim).to_crs(crs_proj)
     # target / destiny
-    end_address = get_location_data(JSON_end['lat'], JSON_end['long'])
-    dest_address = gpd.tools.geocode(end_address, geopy.Nominatim).to_crs(pednet_proj.crs)
+    end_address = get_location_data(JSON_end[1], JSON_end[0])
+    dest_address = gpd.tools.geocode(end_address, geopy.Nominatim).to_crs(crs_proj)
     # ---> OUTPUT 04: save directions as json
     orig_address_geojson = gpd.GeoSeries([orig_address]).to_json()
     dest_address_geojson = gpd.GeoSeries([dest_address]).to_json()
@@ -85,7 +87,7 @@ def getRoutes(JSON_month, JSON_start, JSON_end):
         s = gpd.GeoDataFrame(
             {"src_node": [nodes[0]], "tgt_node": [nodes[1]]},
             geometry=[LineString(pts.values)],
-            crs=pednet_proj.crs
+            crs=crs_proj
         )
         return s
 
@@ -157,8 +159,8 @@ def getRoutes(JSON_month, JSON_start, JSON_end):
     ## CALCULATE SEASONAL ROUTE
     # create PDN graph to calculate the SEASONAL ROUTE based on AM. OF TREES
     season_pdn = pdn.Network(
-                        w_nodes.geometry.x,
-                        w_nodes.geometry.y,
+                        nodes.geometry.x,
+                        nodes.geometry.y,
                         w_edges["node_start"],
                         w_edges["node_end"],
                         w_edges[["tr_len"]]
@@ -179,4 +181,4 @@ def getRoutes(JSON_month, JSON_start, JSON_end):
     # tr_season.geojson
     # short_path.geojson
     # season_path.geojson
-  return season_path_geojson, short_path_geojson, tr_season_geojson, orig_address_geojson, dest_address_geojson
+    return season_path_geojson, short_path_geojson, tr_season_geojson, orig_address_geojson, dest_address_geojson

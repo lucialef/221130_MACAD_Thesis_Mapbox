@@ -213,12 +213,6 @@
 <body>
     <style></style>
 
-    <form action = "/info" method="POST">
-        <div id="coord_start"></div>
-        <div id="coord_end"></div>
-        <div id="sel_month"></div>
-    </form>
-
     <div class="data">
     <h1 id="title1">Not </br>
         all </br>
@@ -231,15 +225,54 @@
         First, double click on the map to set your origin / start point.</br>
         Second, single click elsewhere to set your destiny / end point.</br>
         Third, use the slider to discover alternative seasonal routes per month!</div>
-    <div class="map-overlay top">
+    <!-- <div class="map-overlay top">
         <div class="map-overlay-inner">
             <h2>Discover
                 Seasonal paths</h2>
             <label id="month"></label>
                 <input id="slider" type="range" min="0" max="11" step="1" value="0">
         </div>
+    </div> -->
+    <div class="map-overlay top">
+        <div class="map-overlay-inner">
+            <h2>Discover
+                Seasonal paths</h2>
+            <form action = "/info" method="POST">
+                <table>
+                    <tr>
+                        <td id="text">Start Point:</td>
+                    </tr>
+                    <tr>
+                        <td id="start"></td>
+                    </tr>
+                    <tr>
+                        <td id="coord_start"></td>
+                    </tr>
+                    <tr>
+                        <td id="text">End Point:</td>
+                    </tr>
+                    <tr>
+                        <td id="end"></td>
+                    </tr>
+                    <tr>
+                        <td id="coord_end"></td>
+                    </tr>
+                    <tr>
+                        <td id="text">Set the month:</td>
+                    </tr>
+                    <tr>
+                        <td><label id="month"></label>
+                            <input id="slider" type="range" min="0" max="11" step="1" value="0">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit">Submit</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
-    <div class="coord">
+    <!-- <div class="coord">
         <div id="text">Start Point:
                 <div id="start"></div>
         </div>
@@ -247,6 +280,7 @@
                 <div id="end"></div>
         </div>
     </div>
+    </div> -->
     </div>
 
     <div id="map"></div>

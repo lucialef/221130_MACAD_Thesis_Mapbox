@@ -13,14 +13,24 @@ def index():
 	return render_template('index.html')
 
 @app.route('/info', methods=['POST'])
-def process_post();
+def process_post():
   data_in = request.form
-  start = data_in['start']
-  end = data_in['end']
-  month = data_in['month']
-  data_fin = seasonal.getRoutes(start, end, month)
+  sel_month = data_in['sel_month']
+
+  print(sel_month)
+  return "yeahh"
+
+@app.route('/no', methods=['POST'])
+def xx():
+  data_in = request.form
+  coord_start = data_in['coord_start']
+  coord_end = data_in['coord_end']
+  sel_month = data_in['sel_month']
+  data_fin = seasonal.getRoutes(coord_start, coord_end, sel_month)
+  print(data_fin)
+  
   return data_fin
 
 
 if __name__ == '__main__':
-    app.run(port=port_no)
+  app.run(debug=True, threaded=True)
