@@ -15,7 +15,7 @@ def index():
 @app.route('/info', methods=['POST'])
 def process_post():
   data_in = request.form
-  sel_month = data_in['sel_month']
+  sel_month = data_in['start']
 
   print(sel_month)
   return "yeahh"
